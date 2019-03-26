@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function endpointsToOneString() {
+            const firstPromise = new Promise(function (resolve) {
+                const Http = new XMLHttpRequest();
+                const url = 'https://baconipsum.com/api/?type=all-meat&paras=3&start-with-lorem=1&format=json';
+                Http.open("GET", url);
+                Http.send();
+                Http.onreadystatechange = (e) => {
+                    resolve(Http.responseText)
+                }
+            })
+
+            const secondPromise = new Promise(function (resolve) {
+                const HttpTwo = new XMLHttpRequest();
+                const urlTwo = 'https://baconipsum.com/api/?type=meat-and-filler&paras=5&format=json';
+                HttpTwo.open("GET", urlTwo);
+                HttpTwo.send();
+                HttpTwo.onreadystatechange = (e) => {
+                    resolve(HttpTwo.responseText)
+                }
+            })
+
+            Promise.all([firstPromise, secondPromise])
+                .then(function (result) {
+                    console.log(result[0] + result[1]);
+                })
+        }
+
+        endpointsToOneString();
+    </script>
+</body>
+
+</html>
